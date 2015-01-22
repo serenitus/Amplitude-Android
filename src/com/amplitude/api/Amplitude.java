@@ -87,6 +87,10 @@ public class Amplitude {
         }
 
         public synchronized void initialize(Context context, String apiKey, String userId) {
+            initialize(context, apiKey, userId, null);
+        }
+
+        public synchronized void initialize(Context context, String apiKey, String userId, String deviceId) {
             if (context == null) {
                 Log.e(TAG, "Argument context cannot be null in initialize()");
                 return;
@@ -98,7 +102,7 @@ public class Amplitude {
             if (!initialized) {
                 this.context = context.getApplicationContext();
                 this.apiKey = apiKey;
-                initializeDeviceInfo();
+                initializeDeviceInfo(deviceId);
                 SharedPreferences preferences = context.getSharedPreferences(
                         getSharedPreferencesName(), Context.MODE_PRIVATE);
                 if (userId != null) {
@@ -111,13 +115,12 @@ public class Amplitude {
             }
         }
 
-        private void initializeDeviceInfo() {
+        private void initializeDeviceInfo(final String extDeviceId) {
             deviceInfo = new DeviceInfo(context);
             runOnLogThread(new Runnable() {
-
                 @Override
                 public void run() {
-                    deviceId = initializeDeviceId();
+                    deviceId = (extDeviceId != null ? extDeviceId : initializeDeviceId());
                     advertisingId = deviceInfo.getAdvertisingId();
                     versionName = deviceInfo.getVersionName();
                     osName = deviceInfo.getOSName();
