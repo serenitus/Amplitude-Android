@@ -382,7 +382,7 @@ public class Amplitude {
             }
         }
 
-        public void startSession() {
+/*        public void startSession() {
             if (!contextAndApiKeySet("startSession()")) {
                 return;
             }
@@ -448,7 +448,7 @@ public class Amplitude {
             };
             logThread.postDelayed(endSessionRunnable,
                     Constants.MIN_TIME_BETWEEN_SESSIONS_MILLIS + 1000);
-        }
+        }*/
 
         public void logRevenue(double amount) {
             // Amount is in dollars
@@ -770,11 +770,11 @@ public class Amplitude {
     }
 
     public static void startSession() {
-        instance.startSession();
+ //       instance.startSession();
     }
 
     public static void endSession() {
-        instance.endSession();
+ //       instance.endSession();
     }
 
     public static void logRevenue(double amount) {
